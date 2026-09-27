@@ -1,1 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FIN 408 Slide Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F6F8; --card:#FFFFFF; --ink:#1D2733; --muted:#566273; --rule:#D3DBE3;
+  --navy:#1F3A5F; --navy-soft:#E6EDF5; --safety:#DCE8EE; --safety-line:#C7D8E2;
+  --stamp:#B42318; --ok:#1B6A43; --ok-bg:#E5F3EB; --bad:#B42318; --bad-bg:#FBEAE8;
+  --serif:"Spectral", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif;
+  --radius:6px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E141B; --card:#16202B; --ink:#E3E9EF; --muted:#9BA8B6; --rule:#2B3847;
+    --navy:#93B6E0; --navy-soft:#1C2A3B; --safety:#1A2735; --safety-line:#243546;
+    --stamp:#F2735F; --ok:#62C48F; --ok-bg:#15291F; --bad:#F2735F; --bad-bg:#2E1a18;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E141B; --card:#16202B; --ink:#E3E9EF; --muted:#9BA8B6; --rule:#2B3847;
+  --navy:#93B6E0; --navy-soft:#1C2A3B; --safety:#1A2735; --safety-line:#243546;
+  --stamp:#F2735F; --ok:#62C48F; --ok-bg:#15291F; --bad:#F2735F; --bad-bg:#2E1a18;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:var(--serif);font-size:18px;line-height:1.6;overflow-x:hidden;-webkit-text-size-adjust:100%}
+img,svg{max-width:100%}
+a{color:var(--navy)}
+:focus-visible{outline:3px solid var(--navy);outline-offset:2px;border-radius:3px}
+button,select,input{font-family:var(--sans);font-size:16px}
+.num,table{font-variant-numeric:tabular-nums lining-nums}
 
+/* site nav (shared across pages) */
+.sitenav{display:flex;gap:2px;background:var(--navy);font-family:var(--sans);font-size:15px;font-weight:600}
+.sitenav a{color:rgba(255,255,255,.72);text-decoration:none;padding:10px 18px;display:inline-block}
+.sitenav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.sitenav a[aria-current="page"]{color:#fff;background:rgba(255,255,255,.16)}
+
+/* layout */
+.app{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--rule);background:var(--card);padding:22px 18px 30px;font-family:var(--sans)}
+.brand{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.2;margin:0 0 4px}
+.brand-sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.prog{margin:0 0 18px;padding-right:118px}
+.prog-bar{height:10px;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--bg)}
+.prog-fill{height:100%;width:0;background:var(--navy);transition:width .3s}
+.prog-txt{font-size:14px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between;gap:8px}
+.navgrp{font-size:13px;color:var(--muted);margin:16px 0 4px;font-weight:600}
+.nav{list-style:none;margin:0;padding:0}
+.nav button{all:unset;box-sizing:border-box;display:flex;gap:8px;align-items:baseline;width:100%;padding:6px 8px;border-radius:5px;cursor:pointer;font-size:16px;line-height:1.3;color:var(--ink)}
+.nav button:hover{background:var(--navy-soft)}
+.nav button[aria-current="true"]{background:var(--navy);color:var(--card)}
+.nav button:focus-visible{outline:3px solid var(--navy);outline-offset:1px}
+.nav .tick{width:14px;flex:none;font-weight:700}
+.side-tools{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.main{padding:32px clamp(18px,4vw,56px) 80px;min-width:0}
+.sec{display:none;max-width:820px;margin:0 auto}
+.sec.on{display:block}
+
+/* type */
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.2;color:var(--ink)}
+h1{font-size:38px;font-weight:600;margin:0 0 10px;letter-spacing:-.01em}
+h2{font-size:26px;font-weight:600;margin:36px 0 10px;padding-top:14px;border-top:1px solid var(--rule)}
+h3{font-size:20px;font-weight:600;margin:24px 0 8px}
+h4{font-size:17px;margin:16px 0 6px}
+.lede{font-size:19px;color:var(--muted);margin:0 0 18px;max-width:66ch}
+.sec-head{position:relative;padding-bottom:10px}
+.meta{font-family:var(--sans);font-size:15px;color:var(--muted);margin:0 0 6px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:22px}
+li{margin:3px 0}
+strong{font-weight:600}
+.small{font-size:14px;color:var(--muted)}
+.slidetag{display:inline-block;font-family:var(--sans);font-size:12.5px;font-weight:600;color:var(--navy);background:var(--navy-soft);border-radius:20px;padding:1px 10px;margin:0 0 6px}
+
+.stamp{position:absolute;right:0;top:-6px;font-family:var(--sans);font-weight:700;color:var(--stamp);border:3px double var(--stamp);padding:4px 12px 3px;transform:rotate(-9deg);font-size:20px;letter-spacing:.14em;line-height:1.1;text-align:center;opacity:.88;pointer-events:none;display:none}
+.stamp small{display:block;font-size:11px;letter-spacing:.08em;font-weight:600}
+.sec.done .stamp{display:block}
+.stamp.thud{animation:thud .35s ease-out}
+@keyframes thud{0%{transform:rotate(-9deg) scale(1.9);opacity:0}70%{transform:rotate(-9deg) scale(.95);opacity:.95}100%{transform:rotate(-9deg) scale(1);opacity:.88}}
+@media (prefers-reduced-motion:reduce){.stamp.thud{animation:none}.prog-fill{transition:none}}
+
+.fbox{background:var(--safety);border-left:4px solid var(--navy);padding:14px 16px;margin:16px 0;border-radius:0 var(--radius) var(--radius) 0;font-family:var(--sans);font-size:16px}
+.call{border:1px solid var(--rule);border-left:4px solid var(--navy);background:var(--card);padding:12px 16px;margin:16px 0;border-radius:0 var(--radius) var(--radius) 0}
+.call p:last-child,.call ul:last-child{margin-bottom:0}
+.call-t{font-family:var(--sans);font-weight:600;font-size:16px;margin-bottom:4px;color:var(--navy)}
+.trick .call-t{color:var(--navy)}
+.trap{border-left-color:var(--stamp)}
+.trap .call-t{color:var(--stamp)}
+.tscroll{overflow-x:auto;margin:14px 0 18px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--card);-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:15.5px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;background:var(--navy-soft)}
+td.r,th.r{text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.tot{border-bottom:3px double var(--ink);font-weight:600}
+.defs{display:grid;grid-template-columns:minmax(120px,200px) 1fr;gap:6px 16px;margin:10px 0 18px;font-size:16.5px}
+.defs dt{font-family:var(--sans);font-weight:600}
+.defs dd{margin:0}
+details.reveal{border:1px solid var(--rule);border-radius:var(--radius);background:var(--card);margin:12px 0;padding:0}
+details.reveal>summary{cursor:pointer;padding:10px 14px;font-family:var(--sans);font-weight:600;color:var(--navy);list-style:none}
+details.reveal>summary::-webkit-details-marker{display:none}
+details.reveal>summary::before{content:"+ ";}
+details.reveal[open]>summary::before{content:"\2212  ";}
+details.reveal>div{padding:0 14px 12px}
+
+.btn{font-family:var(--sans);font-weight:600;font-size:15px;border:1px solid var(--navy);background:var(--card);color:var(--navy);padding:7px 14px;border-radius:5px;cursor:pointer;line-height:1.2}
+.btn:hover{background:var(--navy-soft)}
+.btn.pri{background:var(--navy);color:var(--card)}
+.btn.pri:hover{filter:brightness(1.1)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+
+.drill{border:1px solid var(--rule);background:var(--card);border-radius:var(--radius);padding:16px;margin:18px 0}
+.drill-t{font-family:var(--sans);font-weight:600;font-size:18px;margin:0 0 4px}
+.drill-d{font-size:15px;color:var(--muted);margin:0 0 10px}
+.mq{border-top:1px solid var(--rule);padding:14px 0 6px}
+.mq:first-of-type{border-top:0}
+.mq-q{margin:0 0 8px;font-weight:500}
+.opts{display:grid;gap:6px}
+.opt{all:unset;box-sizing:border-box;font-family:var(--sans);font-size:15.5px;border:1px solid var(--rule);border-radius:5px;padding:8px 12px;cursor:pointer;display:flex;gap:10px;align-items:baseline;background:var(--bg);color:var(--ink);line-height:1.35}
+.opt:hover{border-color:var(--navy)}
+.opt:focus-visible{outline:3px solid var(--navy)}
+.opt .mk{width:16px;flex:none;font-weight:700}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt[aria-disabled="true"]{cursor:default}
+.fb{font-family:var(--sans);font-size:15.5px;margin:8px 0;padding:8px 12px;border-radius:5px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);color:var(--ink);border-left:4px solid var(--ok)}
+.fb.no{background:var(--bad-bg);color:var(--ink);border-left:4px solid var(--bad)}
+.fb.info{background:var(--navy-soft);border-left:4px solid var(--navy)}
+.fb .lead{font-weight:700}
+.mt select{max-width:230px;width:100%}
+select{border:1px solid var(--rule);border-radius:5px;padding:6px 8px;background:var(--bg);color:var(--ink);min-height:36px}
+select.right{border-color:var(--ok);box-shadow:0 0 0 1px var(--ok)}
+select.wrong{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
+.mark{font-family:var(--sans);font-weight:700;margin-left:6px;display:inline-block;min-width:14px}
+.mark.y{color:var(--ok)} .mark.n{color:var(--bad)}
+.why{font-family:var(--sans);font-size:13.5px;color:var(--muted);display:none;margin-top:4px}
+.why.show{display:block}
+.secfoot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--rule);margin-top:40px;padding-top:18px}
+.pill{display:inline-block;font-family:var(--sans);font-size:13px;border:1px solid var(--rule);border-radius:20px;padding:1px 9px;color:var(--muted);margin-left:6px}
+
+@media (max-width:900px){
+  body{font-size:17px}
+  .sitenav a{padding:9px 12px;font-size:14px}
+  .app{display:block}
+  .side{position:sticky;top:0;z-index:20;height:auto;overflow:visible;border-right:0;border-bottom:1px solid var(--rule);padding:10px 12px 8px}
+  .brand-sub,.navgrp,.side-tools .btn.full{display:none}
+  .brand{font-size:16px;margin:0 0 6px}
+  .prog{margin:0 0 8px;padding-right:110px}
+  .prog-bar{height:6px}
+  .prog-txt{font-size:13px;margin-top:3px}
+  .navwrap{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .nav{display:flex;gap:6px;flex:none}
+  .nav button{white-space:nowrap;border:1px solid var(--rule);padding:5px 10px;font-size:14.5px}
+  .side-tools{position:absolute;top:8px;right:12px;margin:0}
+  .main{padding:20px 14px 60px}
+  h1{font-size:29px} h2{font-size:22px}
+  .stamp{position:static;display:none;margin:6px 0 0 auto;width:max-content}
+  .sec.done .stamp{display:block}
+  .defs{grid-template-columns:1fr}
+  .defs dd{margin-bottom:8px}
+}
+@media print{.side,.secfoot,.btnrow,.sitenav{display:none}.sec{display:block}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site">
+<a href="index.html">Full Study Guide</a>
+<a href="slides-guide.html" aria-current="page">Slide-Only Guide</a>
+</nav>
+<div class="app">
+<aside class="side" aria-label="Study navigation">
+  <p class="brand">FIN 408 Slide Notes</p>
+  <p class="brand-sub">Only what's in the 4 lecture decks: Why FIs Are Special, Intro to Banks, Bank Financials, Bank Regulation</p>
+  <div class="prog" aria-live="polite">
+    <div class="prog-bar" role="progressbar" aria-label="Sections finished" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="prog-fill" id="progFill"></div></div>
+    <div class="prog-txt"><span id="progTxt">0 of 0 sections</span></div>
+  </div>
+  <nav class="navwrap" id="nav"></nav>
+  <div class="side-tools">
+    <button class="btn" id="themeBtn" type="button" aria-label="Toggle dark mode">Dark mode</button>
+    <button class="btn full" id="resetBtn" type="button">Reset progress</button>
+  </div>
+</aside>
+<main class="main" id="main">
+<!-- ================= DECK 1 ================= -->
+<section class="sec" id="d1" data-title="Why FIs Are Special" data-grp="Deck 1">
+<div class="sec-head"><div class="stamp">CLEARED<small>deck 1</small></div>
+<span class="slidetag">Deck 1: Why Are FIs Special (26 slides)</span>
+<h1>Why financial intermediaries are special</h1>
+<p class="lede">Objectives from slide 2: the special role FIs play, why they get special regulation, what makes some FIs more special than others, and the crisis in financial markets.</p></div>
+
+<div class="prose">
+<h2>Without FIs vs with FIs (slides 3 to 5)</h2>
+<p><b>Without FIs</b> (slide 3): households (net savers) would have to buy equity and debt claims directly from corporations (net borrowers), handing over cash straight to the firm.</p>
+<p><b>Why that flow of funds is low</b> (slide 4): three costs get in the way, and FIs exist to cut them down.</p>
+<dl class="defs">
+<dt>Monitoring costs</dt><dd>Economies of scale let an FI screen and monitor borrowers cheaper than any one household could.</dd>
+<dt>Liquidity costs</dt><dd>Direct claims on a firm are hard to turn into cash quickly.</dd>
+<dt>Price risk</dt><dd>Selling a direct claim on the secondary market risks a bad price.</dd>
+</dl>
+<p><b>With FIs</b> (slide 5): households give cash to the FI and get back deposits or insurance policies. The FI, acting as broker or asset transformer, gives cash to corporations and gets back equity and debt claims.</p>
+
+<h2>Functions of FIs (slide 6)</h2>
+<dl class="defs">
+<dt>Brokerage function</dt><dd>Acts as an agent for the saver, providing information and transaction services. Produces economies of scale.</dd>
+<dt>Asset transformation</dt><dd>Issues its own, more attractive financial claims (deposits, insurance policies) to household savers, and uses that money to buy primary securities from corporations.</dd>
+</dl>
+
+<h2>Role of FIs in cost reduction (slide 7)</h2>
+<ul>
+<li><b>Information costs:</b> without a monitor, investors are exposed to agency costs.</li>
+<li><b>FI as delegated monitor:</b> the FI has a bigger incentive to monitor than any single saver, and gets economies of scale in obtaining information.</li>
+<li><b>FI as information producer:</b> new secondary securities (like bank loans) can let FIs monitor more effectively, and short-term contracts give FIs more control and monitoring power.</li>
+<li>Net result: reduction of information asymmetry between savers and borrowers.</li>
+</ul>
+
+<h2>Liquidity, price risk, and diversification (slide 8)</h2>
+<ul>
+<li>Secondary claims issued by FIs carry less price risk.</li>
+<li>Demand deposits and similar claims are more liquid, which makes them more attractive to small investors.</li>
+<li>FIs have an advantage over households in their ability to diversify, simply because of their size.</li>
+</ul>
+<div class="call"><div class="call-t">Note from the slide</div><p>The S&amp;L debacle of the 1980s was linked to inadequate diversification of savings and loans, especially in the oil-based economies of the Southwest.</p></div>
+
+<h2>Other special services (slide 9)</h2>
+<dl class="defs">
+<dt>Reduced transaction costs</dt><dd>Economies of scale on buying and selling assets.</dd>
+<dt>Maturity intermediation</dt><dd>Bridging savers who want short-term claims with borrowers who want long-term loans.</dd>
+<dt>Transmission of monetary policy</dt><dd>Banks carry Fed actions to the rest of the economy.</dd>
+<dt>Credit allocation</dt><dd>Directing funds toward areas of special need, like home mortgages.</dd>
+<dt>Intergenerational transfers (time intermediation)</dt><dd>Moving wealth across generations.</dd>
+<dt>Payment services</dt><dd>Fedwire and CHIPS.</dd>
+<dt>Denomination intermediation</dt><dd>Letting small investors own pieces of large-denomination assets.</dd>
+</dl>
+<div class="call"><div class="call-t">Notes from the slide</div><p>Agriculture, small businesses, and home ownership have gotten special treatment through loan subsidies, guarantees, and other liquidity-improving activities. A key reason non-FIs haven't been allowed to act as banks is the fear of letting them access the payment system; protecting that system is paramount for regulators.</p></div>
+
+<h2>Specialness and regulation (slides 10 to 11)</h2>
+<p>FIs get special regulatory attention because of the <b>negative externalities</b> of FI failure, the special services FIs provide, and institution-specific functions: money supply transmission (banks), credit allocation (thrifts, farm banks), payment services (banks, thrifts).</p>
+<p>Six types of regulation exist to enhance the net social welfare benefits of FI services:</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Type</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td>Safety and soundness</td><td>Protects against the risk of FI failure</td></tr>
+<tr><td>Monetary policy</td><td>Governs the money supply through banks</td></tr>
+<tr><td>Credit allocation</td><td>Supports socially important sectors</td></tr>
+<tr><td>Consumer protection</td><td>Prevents lending discrimination</td></tr>
+<tr><td>Investor protection</td><td>Protects users of investment banks</td></tr>
+<tr><td>Entry and chartering</td><td>Controls who can enter and what they can do</td></tr>
+</tbody></table></div>
+
+<div class="prose">
+<h3>Safety and soundness regulation (slides 12 to 13)</h3>
+<ul>
+<li><b>Diversification of assets:</b> no more than 15 percent of equity to a single borrower.</li>
+<li><b>Minimum capital requirements:</b> TARP and the Capital Purchase Program (CPP).</li>
+<li><b>Guaranty funds:</b> the Deposit Insurance Fund (DIF) and the Securities Investors Protection Corporation (SIPC).</li>
+<li><b>Monitoring and surveillance:</b> on-site exams and review of accounting statements. The FDIC monitors and regulates DIF participants. Scrutiny increases after crises.</li>
+<li>Regulation is not costless: this is the <b>net regulatory burden</b>.</li>
+</ul>
+<h3>Monetary policy regulation (slide 14)</h3>
+<p>Banks transmit monetary policy from the Fed to the rest of the economy. The Fed directly controls <b>outside money</b> (notes and coins). The bulk of the money supply is <b>inside money</b> (deposits), and banks may be required to hold a specified level of cash reserves against deposits.</p>
+<h3>Credit allocation regulation (slide 15)</h3>
+<p>Supports socially important sectors like housing and farming, through requirements for minimum amounts of assets in a sector, or maximum interest rates or fees to subsidize it. Examples: the <b>Qualified Thrift Lender (QTL) test</b> (65 percent of assets in residential mortgages), usury laws, and Regulation Q (now abolished).</p>
+<h3>Consumer protection regulation (slides 16 to 17)</h3>
+<p>Prevents discrimination in lending: the <b>Community Reinvestment Act (CRA)</b> and the <b>Home Mortgage Disclosure Act (HMDA)</b>. The FFIEC processed information on as many as 7.3 million mortgage transactions in 2017. Analysts question the net benefit versus the burden. Possible extensions: applying the CRA to other FIs, like insurers, given consolidation and universal banking. Examples: the <b>Consumer Financial Protection Bureau (2010)</b> and the credit card reform bill effective 2010.</p>
+<div class="call"><div class="call-t">Notes from the slide</div><p>The CRA has been widely criticized as imposing a greater regulatory burden than the sum of its social benefits. Hedge funds have come under much greater scrutiny since the Long Term Capital Management crisis.</p></div>
+<h3>Investor protection regulation (slide 18)</h3>
+<p>Aimed at protecting investors who use investment banks directly or indirectly, against abuses like insider trading, lack of disclosure, malfeasance, and breach of fiduciary responsibilities. Key legislation: the <b>Securities Acts of 1933 and 1934</b>, the <b>Investment Company Act of 1940</b>, and the <b>Wall Street Reform and Consumer Protection Act of 2010</b>.</p>
+<h3>Entry regulation (slide 19)</h3>
+<p>The entry and activities of FIs are regulated. The level of entry barriers affects profitability and the value of an FI's charter. Regulations define the scope of permitted activities: the <b>Financial Services Modernization Act of 1999</b> affects charter value and the size of the net regulatory burden.</p>
+<div class="call"><div class="call-t">Note from the slide</div><p>Rules on the scope of activities vary widely by country. New Zealand has historically had very few restrictions. Most countries are reluctant to let industrial and banking activities mix, given the risks to the banking system and the potential for cross-subsidizing industrial activities with the bank.</p></div>
+
+<h2>Changing dynamics of specialness (slides 20 to 21)</h2>
+<p>Trends in the U.S.: a decline in the share of depository institutions and insurance companies, and increases in investment companies. This may reflect the net regulatory burden on depository FIs, savers preferring the denomination intermediation that mutual funds provide, and the Financial Services Modernization Act.</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Share of financial assets</th><th class="r">1860</th><th class="r">1980</th><th class="r">2000</th><th class="r">2021</th></tr></thead>
+<tbody>
+<tr><td>Depository institutions</td><td class="r">89.2%</td><td class="r">57.9%</td><td class="r">27.9%</td><td class="r">30.2%</td></tr>
+<tr><td>Insurance companies</td><td class="r">10.7%</td><td class="r">15.7%</td><td class="r">14.4%</td><td class="r">15.1%</td></tr>
+<tr><td>Investment companies</td><td class="r">&mdash;</td><td class="r">3.8%</td><td class="r">24.0%</td><td class="r">31.1%</td></tr>
+<tr><td>Pension funds</td><td class="r">&mdash;</td><td class="r">13.7%</td><td class="r">14.3%</td><td class="r">15.3%</td></tr>
+<tr><td>Finance companies</td><td class="r">&mdash;</td><td class="r">5.2%</td><td class="r">4.1%</td><td class="r">2.0%</td></tr>
+<tr><td>Securities brokers and dealers</td><td class="r">0.0%</td><td class="r">3.6%</td><td class="r">15.1%</td><td class="r">5.3%</td></tr>
+<tr><td>Real estate investment trusts</td><td class="r">&mdash;</td><td class="r">0.1%</td><td class="r">0.2%</td><td class="r">0.9%</td></tr>
+<tr><td class="tot">Total, $ trillions</td><td class="r tot">0.001</td><td class="r tot">4.10</td><td class="r tot">29.91</td><td class="r tot">83.23</td></tr>
+</tbody></table></div>
+<div class="prose"><p class="small">Condensed to four snapshot years for readability. The full slide table also shows 1922, 1929, 1948, 1960, 1970, 2005, and 2010.</p>
+
+<h2>Risk and the financial crisis (slide 22)</h2>
+<p>Reactions to the FSM Act and other factors:</p>
+<ul>
+<li>A shift from <b>"originate and hold"</b> to <b>"originate and distribute,"</b> which changed incentives to monitor and control risk.</li>
+<li>A shift to off-balance-sheet risks, which degraded quality and increased risk.</li>
+<li>The housing market bubble encouraged the subprime market and more exotic mortgages.</li>
+</ul>
+
+<h2>Enterprise risk management (slide 23)</h2>
+<p>ERM recognizes the value of prioritizing and managing risks on an interrelated portfolio basis, rather than one at a time. The recent crisis pushed this into focus. Before the crisis, the emphasis was on processes and systems; after, attention shifted to building a strong risk culture supported by governance arrangements.</p>
+
+<h2>FinTech (slide 24)</h2>
+<p>Financial technology, or FinTech, means using technology to deliver financial solutions in a way that competes with traditional financial methods. Services include cryptocurrencies (like bitcoin) and blockchain.</p>
+
+<h2>Global trends (slide 25)</h2>
+<p>U.S. FIs face increased competition from foreign FIs. Only 2 of the top ten banks are U.S. banks. Foreign bank assets in the U.S. are typically more than 10 percent of the total, and as high as 21.9 percent.</p>
+
+<h2>Largest banks (slide 26)</h2>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Rank</th><th>Bank</th><th>Country</th><th class="r">Total assets ($B)</th><th class="r">Tier 1 capital ($B)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Industrial and Commercial Bank of China</td><td>China</td><td class="r">5,106.44</td><td class="r">439.94</td></tr>
+<tr><td>2</td><td>China Construction Bank Corporation</td><td>China</td><td class="r">4,308.16</td><td class="r">361.64</td></tr>
+<tr><td>3</td><td>Agricultural Bank of China</td><td>China</td><td class="r">4,166.16</td><td class="r">336.18</td></tr>
+<tr><td>4</td><td>Bank of China</td><td>China</td><td class="r">3,737.01</td><td class="r">305.15</td></tr>
+<tr><td>5</td><td>JPMorgan Chase</td><td>US</td><td class="r">3,386.07</td><td class="r">234.84</td></tr>
+<tr><td>6</td><td>Bank of America</td><td>US</td><td class="r">2,819.63</td><td class="r">200.10</td></tr>
+<tr><td>7</td><td>Citigroup</td><td>US</td><td class="r">2,260.33</td><td class="r">167.43</td></tr>
+<tr><td>8</td><td>HSBC Holdings</td><td>UK</td><td class="r">2,984.16</td><td class="r">160.17</td></tr>
+<tr><td>9</td><td>Wells Fargo</td><td>US</td><td class="r">1,955.16</td><td class="r">158.20</td></tr>
+<tr><td>10</td><td>Mitsubishi UFJ Financial Group</td><td>Japan</td><td class="r">3,247.28</td><td class="r">144.33</td></tr>
+</tbody></table></div>
+<div class="prose"><p class="small">This 2021 table actually shows three U.S. banks in the top 10 (JPMorgan, BofA, Wells Fargo). The "only 2 of the top ten" bullet on slide 25 may reflect an earlier year's count.</p>
+
+<h2>Quick check</h2>
+</div>
+<div data-qc="d1"></div>
+<div data-match="d1"></div>
+</section>
+<!-- ================= DECK 2 ================= -->
+<section class="sec" id="d2" data-title="Intro to Banks" data-grp="Deck 2">
+<div class="sec-head"><div class="stamp">CLEARED<small>deck 2</small></div>
+<span class="slidetag">Deck 2: Intro to Banks (21 slides)</span>
+<h1>Intro to depository institutions</h1>
+<p class="lede">Slide 2: this chapter covers three FI groups (commercial banks, savings institutions, credit unions), and looks at their size, structure, composition, balance sheets, recent trends, regulation, and performance.</p></div>
+
+<div class="prose">
+<h2>Products of U.S. FIs, 1950 vs now (slides 3 to 5)</h2>
+<p>In 1950 there was a much greater distinction between what different FIs offered. Today, product lines and services have blurred into a much wider array. X marks the function; * means minor involvement; + means selective involvement through affiliates.</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>1950</th><th>Payment</th><th>Savings</th><th>Fiduciary</th><th>Lend: business</th><th>Lend: consumer</th><th>Underwrite equity</th><th>Underwrite debt</th><th>Insurance</th></tr></thead>
+<tbody>
+<tr><td>Depository institutions</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>Insurance companies</td><td>&mdash;</td><td>X</td><td>&mdash;</td><td>*</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>X</td></tr>
+<tr><td>Finance companies</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>*</td><td>X</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>Securities firms</td><td>&mdash;</td><td>X</td><td>X</td><td>&mdash;</td><td>&mdash;</td><td>X</td><td>X</td><td>&mdash;</td></tr>
+<tr><td>Pension funds</td><td>&mdash;</td><td>X</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>Mutual funds</td><td>&mdash;</td><td>X</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+</tbody></table></div>
+<div class="tscroll"><table>
+<thead><tr><th>2019</th><th>Payment</th><th>Savings</th><th>Fiduciary</th><th>Lend: business</th><th>Lend: consumer</th><th>Underwrite equity</th><th>Underwrite debt</th><th>Insurance</th></tr></thead>
+<tbody>
+<tr><td>Depository institutions</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+<tr><td>Insurance companies</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+<tr><td>Finance companies</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>+</td><td>+</td><td>X</td></tr>
+<tr><td>Securities firms</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr>
+<tr><td>Pension funds</td><td>&mdash;</td><td>X</td><td>X</td><td>X</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>X</td></tr>
+<tr><td>Mutual funds</td><td>X</td><td>X</td><td>X</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+</tbody></table></div>
+
+<div class="prose">
+<h2>Specialness of depository FIs (slides 6 to 7)</h2>
+<p>Depository FIs offer products on <b>both sides</b> of the balance sheet: loans on the asset side, deposits on the liabilities side. That's what sets them apart from other FI types.</p>
+
+<h2>Other outputs of depository FIs (slide 8)</h2>
+<p>In 1950: payment services, savings products, fiduciary services. By 2016, that expanded to frequently include underwriting of debt and equity, plus insurance and risk management products.</p>
+
+<h2>Size of depository FIs (slides 9 to 10)</h2>
+<p>Consolidation has created some very large FIs, from the combined effects of disintermediation, global competition, regulatory changes, technological developments, and competition across different FI types.</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Rank</th><th>Institution</th><th class="r">Banking assets ($B)</th><th class="r">Holding co. assets ($B)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>JPMorgan Chase</td><td class="r">3,290.5</td><td class="r">3,757.6</td></tr>
+<tr><td>2</td><td>Bank of America</td><td class="r">2,427.5</td><td class="r">3,085.4</td></tr>
+<tr><td>3</td><td>Wells Fargo</td><td class="r">1,810.6</td><td class="r">1,954.9</td></tr>
+<tr><td>4</td><td>Citigroup</td><td class="r">1,704.6</td><td class="r">2,361.9</td></tr>
+<tr><td>5</td><td>U.S. Bancorp</td><td class="r">556.8</td><td class="r">567.5</td></tr>
+<tr><td>6</td><td>PNC Financial Services Group</td><td class="r">549.6</td><td class="r">554.5</td></tr>
+<tr><td>7</td><td>Truist Financial</td><td class="r">516.8</td><td class="r">529.9</td></tr>
+<tr><td>8</td><td>Capital One</td><td class="r">483.3</td><td class="r">425.4</td></tr>
+<tr><td>9</td><td>Charles Schwab</td><td class="r">429.6</td><td class="r">607.5</td></tr>
+<tr><td>10</td><td>Bank of New York Mellon</td><td class="r">416.6</td><td class="r">470.5</td></tr>
+<tr><td>11</td><td>Morgan Stanley</td><td class="r">409.7</td><td class="r">1,190.5</td></tr>
+<tr><td>12</td><td>Goldman Sachs</td><td class="r">387.4</td><td class="r">1,443.2</td></tr>
+<tr><td>13</td><td>State Street</td><td class="r">319.4</td><td class="r">323.1</td></tr>
+</tbody></table></div>
+
+<div class="prose">
+<h2>Commercial banks (slide 11)</h2>
+<p>The largest group of depository institutions. They differ from other FIs in the composition of assets and liabilities, and in regulatory oversight. Large and small commercial banks differ in structure and composition: larger banks make more commercial and industrial loans, small banks make more real estate loans. It's a mix of very large banks with very small banks.</p>
+<div class="call"><div class="call-t">Note from the slide</div><p>Commercial banks accept deposits and make consumer, commercial, and real estate loans.</p></div>
+
+<h2>Structure and composition (slides 12 to 13)</h2>
+<p>The number of banks is shrinking: 14,416 commercial banks in 1985, 12,744 in 1989, 4,774 in 2018. This is mostly the result of mergers and acquisitions, which were prevented prior to the 1980s and 1990s. Consolidation has reduced the asset share of the smallest banks (under $1 billion).</p>
+<div class="call"><div class="call-t">Chart: changes in number of banks, 1980 to 2021</div><p>Three lines: mergers, new charters, and failed banks. Mergers spiked in the late 1980s and again in the mid-1990s to 2000s, then trended down. New charters were strong through the 1980s and 1990s, then collapsed to near zero after 2008. Failed banks spiked around 2009 to 2011 (the financial crisis) after being near zero for most of the 1990s and 2000s.</p></div>
+
+<h2>Regulation, functions, and structure (slide 14)</h2>
+<p>Structural changes in banking generally result from changes in regulatory policy. Example: the change permitting interstate branching, the <b>Riegle-Neal Act of 1994</b>.</p>
+
+<h2>Breakdown of loan portfolios (slide 15)</h2>
+<p>Small banks vs large banks, by share of loan portfolio:</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Loan type</th><th class="r">Small banks</th><th class="r">Large banks</th></tr></thead>
+<tbody>
+<tr><td>Real estate loans</td><td class="r">74.49%</td><td class="r">43.83%</td></tr>
+<tr><td>C&amp;I loans</td><td class="r">14.29%</td><td class="r">21.88%</td></tr>
+<tr><td>Consumer loans</td><td class="r">3.79%</td><td class="r">9.44%</td></tr>
+<tr><td>Credit cards</td><td class="r">0.30%</td><td class="r">7.82%</td></tr>
+<tr><td>Farm loans</td><td class="r">5.43%</td><td class="r">0.39%</td></tr>
+<tr><td>Other loans</td><td class="r">1.69%</td><td class="r">16.63%</td></tr>
+</tbody></table></div>
+
+<div class="prose">
+<h2>Commercial banks: asset concentration (slide 16)</h2>
+<p>1984 vs 2021, by bank size:</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Asset size</th><th class="r">2021: # banks</th><th class="r">2021: % assets</th><th class="r">1984: # banks</th><th class="r">1984: % assets</th></tr></thead>
+<tbody>
+<tr><td>Under $100 million</td><td class="r">712</td><td class="r">0.2%</td><td class="r">12,044</td><td class="r">16.1%</td></tr>
+<tr><td>$100 million to $1 billion</td><td class="r">2,702</td><td class="r">4.5%</td><td class="r">2,161</td><td class="r">20.5%</td></tr>
+<tr><td>$1 billion to $10 billion</td><td class="r">675</td><td class="r">8.4%</td><td class="r">254</td><td class="r">28.9%</td></tr>
+<tr><td>$10 billion or more</td><td class="r">142</td><td class="r">86.9%</td><td class="r">24</td><td class="r">34.5%</td></tr>
+<tr><td class="tot">All FDIC-insured banks</td><td class="r tot">4,231</td><td class="r tot">100.0%</td><td class="r tot">14,483</td><td class="r tot">100.0%</td></tr>
+</tbody></table></div>
+<div class="prose"><p class="small">In 1984, the 24 biggest banks (0.2% of banks) held 34.5% of assets. By 2021, 142 banks (3.4%) held 86.9%. That's the consolidation story in one table.</p>
+
+<h2>Structure and composition of commercial banks (slide 17)</h2>
+<p>Limited powers to underwrite corporate securities have existed only since 1987. The <b>Financial Services Modernization Act of 1999</b> permitted commercial banks, investment banks, and insurance companies to merge.</p>
+
+<h2>Composition of the commercial banking sector (slide 18)</h2>
+<dl class="defs">
+<dt>Community banks</dt><dd>Small, local.</dd>
+<dt>Regional or superregional banks</dt><dd>Have access to the federal funds market to finance their lending and investment activities.</dd>
+<dt>Money center banks</dt><dd>Bank of New York Mellon, Deutsche Bank (Bankers Trust), Citigroup, J.P. Morgan Chase, HSBC Bank USA.</dd>
+</dl>
+
+<h2>Balance sheet and trends (slide 19)</h2>
+<p>Key trend since 1987: business loans have declined in importance while securities and mortgages have increased. What's driving this?</p>
+<ul>
+<li>The increased importance of alternative funding through the commercial paper market.</li>
+<li>Securitization of mortgage loans.</li>
+<li>Temporary effects: credit crunches during the recessions of 1989 to 1992 and 2001 to 2002.</li>
+</ul>
+<div class="call"><div class="call-t">Chart: portfolio shift, 1984 to 2021 (Figure 2-4)</div><p>Real estate loans rose from about 30% of assets to a mid-2000s peak near 38%, dipped after the crisis, then climbed again after 2020. Securities bounced between 15% and 24%. Commercial and industrial loans slid from around 16% down toward 8 to 10%. Cash assets fell from about 8% to near 4% before jumping after 2020. Loans to individuals stayed fairly flat, around 7 to 10%.</p></div>
+
+<h2>Commercial banks, September 30, 2018 (slides 20 to 21)</h2>
+<p>Slide 20 shows the portfolio shift chart above. Slide 21 gives the primary liabilities:</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Liability</th><th class="r">$ billions</th></tr></thead>
+<tbody>
+<tr><td>Deposits</td><td class="r">12,631.6</td></tr>
+<tr><td>Borrowings</td><td class="r">1,589.4</td></tr>
+<tr><td>Other liabilities</td><td class="r">390.3</td></tr>
+</tbody></table></div>
+<div class="prose">
+<div class="call trap"><div class="call-t">The slide's inference</div><p>Maturity mismatch / interest rate risk and liquidity risk are key areas of exposure. This is the single most likely "why" question from this deck.</p></div>
+
+<h2>Quick check</h2>
+</div>
+<div data-qc="d2"></div>
+<div data-match="d2"></div>
+</section>
+<!-- ================= DECK 3 ================= -->
+<section class="sec" id="d3" data-title="Bank Financials" data-grp="Deck 3">
+<div class="sec-head"><div class="stamp">CLEARED<small>deck 3</small></div>
+<span class="slidetag">Deck 3: Bank Financials (5 slides)</span>
+<h1>Bank financials</h1>
+<p class="lede">This deck is short: two tables and a link. But they're dense, so slow down here.</p></div>
+
+<div class="prose">
+<h2>Aggregate balance sheet (slide 3, Table 2-5, Dec 31 2021)</h2>
+<p>The combined balance sheet of every U.S. commercial bank, in $ billions and as a percent of total assets.</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Assets</th><th class="r">$ billions</th><th class="r">%</th></tr></thead>
+<tbody>
+<tr><td>Cash assets</td><td class="r">3,420.4</td><td class="r">15.41%</td></tr>
+<tr><td>Securities</td><td class="r">5,587.1</td><td class="r">25.17%</td></tr>
+<tr><td>&nbsp;&nbsp;U.S. government securities</td><td class="r">4,465.1</td><td class="r">20.12%</td></tr>
+<tr><td>&nbsp;&nbsp;Other</td><td class="r">1,122.0</td><td class="r">5.06%</td></tr>
+<tr><td>Net loans and leases</td><td class="r">10,396.6</td><td class="r">46.84%</td></tr>
+<tr><td>&nbsp;&nbsp;All real estate loans</td><td class="r">4,813.8</td><td class="r">21.69%</td></tr>
+<tr><td>&nbsp;&nbsp;Farm loans</td><td class="r">71.1</td><td class="r">0.32%</td></tr>
+<tr><td>&nbsp;&nbsp;Commercial and industrial loans</td><td class="r">2,266.0</td><td class="r">10.21%</td></tr>
+<tr><td>&nbsp;&nbsp;Loans to individuals</td><td class="r">1,744.7</td><td class="r">7.86%</td></tr>
+<tr><td>&nbsp;&nbsp;Total other loans and leases</td><td class="r">1,667.5</td><td class="r">7.51%</td></tr>
+<tr><td>&nbsp;&nbsp;Less: allowance for loan losses</td><td class="r">166.6</td><td class="r">0.75%</td></tr>
+<tr><td>Other assets</td><td class="r">2,791.1</td><td class="r">12.58%</td></tr>
+<tr><td class="tot">Total assets</td><td class="r tot">22,195.2</td><td class="r tot">100.00%</td></tr>
+<tr><th colspan="3">Liabilities and capital</th></tr>
+<tr><td>Total deposits</td><td class="r">18,410.3</td><td class="r">82.95%</td></tr>
+<tr><td>&nbsp;&nbsp;Deposits held in foreign offices</td><td class="r">1,512.0</td><td class="r">6.81%</td></tr>
+<tr><td>&nbsp;&nbsp;Deposits held in domestic offices</td><td class="r">16,898.3</td><td class="r">76.13%</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Transaction accounts</td><td class="r">5,735.6</td><td class="r">25.84%</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;Nontransaction accounts</td><td class="r">11,162.8</td><td class="r">50.29%</td></tr>
+<tr><td>Borrowings</td><td class="r">591.5</td><td class="r">2.67%</td></tr>
+<tr><td>Other liabilities</td><td class="r">981.0</td><td class="r">4.42%</td></tr>
+<tr><td class="tot">Total liabilities</td><td class="r tot">19,982.8</td><td class="r tot">90.03%</td></tr>
+<tr><td class="tot">Total equity capital</td><td class="r tot">2,212.4</td><td class="r tot">9.97%</td></tr>
+<tr><td class="tot">Total liabilities and capital</td><td class="r tot">22,195.2</td><td class="r tot">100.00%</td></tr>
+</tbody></table></div>
+<div class="prose">
+<div class="call"><div class="call-t">A few things worth noticing</div><ul>
+<li>Net loans and leases are the biggest asset (46.84%), and real estate loans alone are almost half of that.</li>
+<li>Deposits fund 82.95% of the whole balance sheet. Equity is under 10%.</li>
+<li>Nontransaction deposits (savings, time deposits) are double transaction deposits (checking-type accounts).</li>
+</ul></div>
+
+<h2>Bank performance (slide 4)</h2>
+<p>A year-by-year look at how the whole industry has performed.</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Year</th><th class="r">Institutions</th><th class="r">ROA</th><th class="r">ROE</th><th class="r">Provision / assets</th><th class="r">Net charge-offs / loans</th><th class="r">Asset growth</th><th class="r">Net op. income growth</th><th class="r">Failed / assisted</th></tr></thead>
+<tbody>
+<tr><td>2021</td><td class="r">4,231</td><td class="r">1.24%</td><td class="r">12.27%</td><td class="r">&minus;0.15%</td><td class="r">0.24%</td><td class="r">8.32%</td><td class="r">100.37%</td><td class="r">0</td></tr>
+<tr><td>2015</td><td class="r">5,538</td><td class="r">1.04%</td><td class="r">9.25%</td><td class="r">0.22%</td><td class="r">0.43%</td><td class="r">2.89%</td><td class="r">8.02%</td><td class="r">8</td></tr>
+<tr><td>2012</td><td class="r">6,017</td><td class="r">1.00%</td><td class="r">8.91%</td><td class="r">0.39%</td><td class="r">1.11%</td><td class="r">5.83%</td><td class="r">16.56%</td><td class="r">41</td></tr>
+<tr><td>2010</td><td class="r">6,530</td><td class="r">0.65%</td><td class="r">5.86%</td><td class="r">1.21%</td><td class="r">2.67%</td><td class="r">2.05%</td><td class="r">1,088.1%</td><td class="r">139</td></tr>
+<tr><td>2009</td><td class="r">6,840</td><td class="r">&minus;0.10%</td><td class="r">&minus;0.93%</td><td class="r">1.94%</td><td class="r">2.60%</td><td class="r">&minus;3.95%</td><td class="r">&minus;137.98%</td><td class="r">120</td></tr>
+<tr><td>2008</td><td class="r">7,086</td><td class="r">0.13%</td><td class="r">1.33%</td><td class="r">1.30%</td><td class="r">1.32%</td><td class="r">10.15%</td><td class="r">&minus;80.48%</td><td class="r">25</td></tr>
+<tr><td>2007</td><td class="r">7,283</td><td class="r">0.93%</td><td class="r">9.12%</td><td class="r">0.54%</td><td class="r">0.62%</td><td class="r">10.75%</td><td class="r">&minus;21.21%</td><td class="r">2</td></tr>
+<tr><td>2006</td><td class="r">7,450</td><td class="r">1.33%</td><td class="r">13.02%</td><td class="r">0.26%</td><td class="r">0.41%</td><td class="r">11.63%</td><td class="r">11.19%</td><td class="r">0</td></tr>
+<tr><td>2003</td><td class="r">7,769</td><td class="r">1.40%</td><td class="r">15.34%</td><td class="r">0.47%</td><td class="r">0.89%</td><td class="r">7.42%</td><td class="r">14.92%</td><td class="r">3</td></tr>
+<tr><td>2001</td><td class="r">8,079</td><td class="r">1.15%</td><td class="r">13.09%</td><td class="r">0.67%</td><td class="r">0.95%</td><td class="r">4.91%</td><td class="r">&minus;1.89%</td><td class="r">3</td></tr>
+<tr><td>2000</td><td class="r">8,315</td><td class="r">1.19%</td><td class="r">14.07%</td><td class="r">0.47%</td><td class="r">0.64%</td><td class="r">8.79%</td><td class="r">2.02%</td><td class="r">6</td></tr>
+<tr><td>1999</td><td class="r">8,580</td><td class="r">1.31%</td><td class="r">15.31%</td><td class="r">0.38%</td><td class="r">0.61%</td><td class="r">5.37%</td><td class="r">20.42%</td><td class="r">7</td></tr>
+<tr><td>1989</td><td class="r">12,709</td><td class="r">0.49%</td><td class="r">7.71%</td><td class="r">0.94%</td><td class="r">1.16%</td><td class="r">5.38%</td><td class="r">&minus;38.70%</td><td class="r">206</td></tr>
+</tbody></table></div>
+<div class="prose">
+<div class="call"><div class="call-t">Reading this table</div><ul>
+<li><b>2009 is the only year with negative ROA and ROE</b> (&minus;0.10% and &minus;0.93%). That's the financial crisis.</li>
+<li><b>Provisions peak in 2009</b> (1.94% of assets); <b>charge-offs peak a year later, in 2010</b> (2.67%), because loans get written off after they were provisioned for.</li>
+<li><b>2021 has a negative provision</b> (&minus;0.15%): banks released reserves they'd built up, which flatters that year's earnings.</li>
+<li>The number of institutions fell every single year shown here, from 12,709 (1989) to 4,231 (2021).</li>
+</ul></div>
+
+<h2>Where to look it up (slide 5)</h2>
+<p>The deck links to <a href="https://www.ffiec.gov/npw/Institution/TopHoldings" target="_blank" rel="noopener">ffiec.gov/npw/Institution/TopHoldings</a>, the FFIEC's National Information Center, for looking up the largest bank holding companies.</p>
+
+<h2>Quick check</h2>
+</div>
+<div data-qc="d3"></div>
+</section>
+<!-- ================= DECK 4 ================= -->
+<section class="sec" id="d4" data-title="Bank Regulation" data-grp="Deck 4">
+<div class="sec-head"><div class="stamp">CLEARED<small>deck 4</small></div>
+<span class="slidetag">Deck 4: Bank Regulation (10 slides)</span>
+<h1>Bank regulation</h1>
+<p class="lede">Who regulates which bank, how bank failures have run since 1934, and the 13 laws named on the legislation slides.</p></div>
+
+<div class="prose">
+<h2>Key regulatory agencies (slide 3)</h2>
+<dl class="defs">
+<dt>The FDIC</dt><dd>Runs the Deposit Insurance Fund (DIF). Its role is preventing contagious "runs" or panics.</dd>
+<dt>The OCC</dt><dd>Its primary function is to charter (and close) national banks.</dd>
+<dt>The FRS (Federal Reserve)</dt><dd>Monetary policy and lender of last resort. National banks are automatically FRS members; state-chartered banks can elect to join.</dd>
+<dt>State authorities</dt><dd>Perform functions similar to the OCC's, for state-chartered banks.</dd>
+<dt>Dual banking system</dt><dd>The coexistence of national and state-chartered banks.</dd>
+</dl>
+
+<h2>Bank regulators (slide 4)</h2>
+<p>Insured commercial banks in 2021: $22,195.2 billion in assets, 4,231 institutions.</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Group</th><th class="r"># of banks</th><th>Regulator</th></tr></thead>
+<tbody>
+<tr><td>Nationally chartered</td><td class="r">747</td><td>OCC</td></tr>
+<tr><td>State chartered</td><td class="r">3,484</td><td>split below</td></tr>
+<tr><td>&nbsp;&nbsp;Members (FRS)</td><td class="r">663</td><td>Federal Reserve</td></tr>
+<tr><td>&nbsp;&nbsp;Nonmembers</td><td class="r">2,821</td><td>FDIC</td></tr>
+</tbody></table></div>
+
+<div class="prose">
+<h2>Bank failures (slide 5)</h2>
+<p>Chart title on the slide: "Number of U.S. bank failures peaked in the 1980s, but 2023 is a standout year for big collapses." Two series: number of failures per year, and total assets of failed banks (in constant 2023 dollars).</p>
+</div>
+<div class="tscroll"><table>
+<thead><tr><th>Year</th><th class="r">Failures</th><th class="r">Assets of failed banks</th></tr></thead>
+<tbody>
+<tr><td>1937</td><td class="r">75</td><td class="r">&mdash;</td></tr>
+<tr><td>1989</td><td class="r">534</td><td class="r">$389.3 billion</td></tr>
+<tr><td>2008</td><td class="r">&mdash;</td><td class="r">$514.9 billion (peak)</td></tr>
+<tr><td>2010</td><td class="r">157</td><td class="r">&mdash;</td></tr>
+<tr><td>2023</td><td class="r">2</td><td class="r">$319.4 billion</td></tr>
+</tbody></table></div>
+<div class="prose"><p class="small">The number of failures peaked in 1989 (534), but 2023 shows how few failures (just 2) can still add up to huge assets, when the failing banks are large.</p>
+
+<h2>Legislation (slides 6 to 10)</h2>
+<p>Thirteen laws, in the order the slides present them.</p>
+</div>
+<div id="lawList4"></div>
+<div class="prose">
+<h2>Quick check</h2>
+</div>
+<div data-qc="d4"></div>
+<div data-match="d4law"></div>
+<div data-match="d4reg"></div>
+</section>
+
+<section class="sec" id="final" data-title="Mixed review" data-grp="Practice">
+<div class="sec-head"><div class="stamp">CLEARED<small>mixed review</small></div>
+<span class="slidetag">All 4 decks</span>
+<h1>Mixed review</h1>
+<p class="lede">One shuffled set pulling from all four decks. Good for a last pass the night before.</p></div>
+<div data-qc="final"></div>
+</section>
+<script>
+/* ================= DATA: slides only ================= */
+const LAWS4=[
+ {y:1927,n:'McFadden Act',p:['Made branching of nationally chartered banks subject to the same branching regulations as state-chartered banks','Liberalized national banks\u2019 securities underwriting activities, which previously had to go through state-chartered affiliates']},
+ {y:1933,n:'Banking Acts of 1933 (Glass-Steagall)',p:['Generally prohibited commercial banks from underwriting securities, with four exceptions: municipal general obligation bonds, U.S. government bonds, private placements, and real estate loans','Established the FDIC to insure bank deposits','Prohibited banks from paying interest on demand deposits']},
+ {y:1956,n:'Bank Holding Company Act',p:['Restricted the banking and nonbanking acquisition activities of multibank holding companies','Empowered the Federal Reserve to regulate multibank holding companies: determining permissible activities and exercising supervisory authority']},
+ {y:1978,n:'International Banking Act',p:['Regulated foreign bank branches and agencies in the United States','Subjected foreign banks to the McFadden and Glass-Steagall Acts','Gave foreign banks access to Fedwire, the discount window, and deposit insurance']},
+ {y:1980,n:'Depository Institutions Deregulation and Monetary Control Act (DIDMCA)',p:['Set a six-year phaseout for Regulation Q interest rate ceilings on small time and savings deposits','Authorized NOW accounts nationwide','Introduced uniform reserve requirements for state-chartered and nationally chartered banks','Increased the ceiling on deposit insurance coverage from $40,000 to $100,000','Allowed federally chartered thrifts to make consumer and commercial loans (subject to size restrictions)']},
+ {y:1982,n:'Garn-St Germain Depository Institutions Act (DIA)',p:['Introduced money market deposit accounts (MMDAs) and super NOW accounts as interest rate-bearing savings accounts with limited check-writing features','Allowed federally chartered thrifts more extensive lending powers and demand deposit-taking powers','Allowed sound commercial banks to acquire failed savings institutions','Reaffirmed limitations on bank powers to underwrite and distribute insurance']},
+ {y:1987,n:'Competitive Equality in Banking Act (CEBA)',p:['Redefined the definition of a bank to limit the growth of nonbank banks','Sought to recapitalize the Federal Savings and Loan Insurance Corporation (FSLIC)']},
+ {y:1989,n:'Financial Institutions Reform, Recovery, and Enforcement Act (FIRREA)',p:['Limited savings banks\u2019 investments in nonresidential real estate, required divestiture of junk bond holdings by 1994, and imposed the Qualified Thrift Lender (QTL) test','Equalized the capital requirements of thrifts and banks','Replaced the FSLIC with FDIC-SAIF','Replaced the Federal Home Loan Bank Board with the Office of Thrift Supervision (OTS), an agency of the Treasury','Created the Resolution Trust Corporation (RTC) to resolve failed and failing savings institutions']},
+ {y:1991,n:'Federal Deposit Insurance Corporation Improvement Act (FDICIA)',p:['Introduced prompt corrective action (PCA), requiring mandatory regulatory intervention when a bank\u2019s capital falls','Introduced risk-based deposit insurance premiums beginning in 1993','Limited the use of too-big-to-fail bailouts by federal regulators for large banks','Extended federal regulation over foreign bank branches and agencies in the Foreign Bank Supervision and Enhancement Act (FBSEA)']},
+ {y:1994,n:'Riegle-Neal Interstate Banking and Branching Efficiency Act',p:['Permitted bank holding companies to acquire banks in other states, starting September 1995','Invalidated the laws of states that had allowed interstate banking only on a regional or reciprocal basis','Beginning in June 1997, bank holding companies could convert out-of-state subsidiary banks into branches of a single interstate bank','Newly chartered branches were also permitted interstate if allowed by state law']},
+ {y:1999,n:'Financial Services Modernization Act (Gramm-Leach-Bliley)',p:['Eliminated restrictions on banks, insurance companies, and securities firms entering each other\u2019s areas of business, allowing the creation of a financial services holding company','Provided for state regulation of insurance','Streamlined bank holding company supervision, with the Federal Reserve as the umbrella holding company supervisor','Prohibited FDIC assistance to affiliates and subsidiaries of banks and savings institutions','Provided national treatment for foreign banks engaging in activities authorized under the act']},
+ {y:2010,n:'Wall Street Reform and Consumer Protection Act (Dodd-Frank)',p:['Created the Financial Services Oversight Council to watch for systemic risks at large FIs','Gave the government power to break up FIs that pose a systemic risk to the financial system','Created the Consumer Financial Protection Bureau to regulate products such as credit cards and mortgages','Allowed Congress to order the Government Accountability Office to audit Federal Reserve activities','Gave shareholders the right to a nonbinding proxy vote on corporate pay packages','Required some over-the-counter derivatives to be traded through clearinghouses, to provide transparency of the value of trades']},
+ {y:2018,n:'Economic Growth, Regulatory Relief, and Consumer Protection Act',p:['Relaxed or exempted certain mortgage lending rules, e.g., exempting certain insured depositories and credit unions that originate few mortgages from some HMDA reporting requirements','Provided regulatory relief for community banks: banks under $10 billion in assets are exempt from the Volcker Rule, and banks meeting a new Community Bank Leverage Ratio are exempt from other risk-based capital and leverage ratio requirements','Enhanced consumer protections in targeted areas, such as requiring credit reporting agencies to provide fraud alerts for at least a year and to allow consumers to place security freezes on their credit reports','Altered the criteria for enhanced prudential regulation from the original $50 billion asset threshold: global systemically important banks and banks over $250 billion in assets are still automatically subject to enhanced regulation; banks between $100 billion and $250 billion are automatically subject only to supervisory stress tests, while the Fed has discretion to apply other provisions; banks between $50 billion and $100 billion are no longer subject to enhanced regulation, except for the risk committee requirement','Provided regulatory relief to certain securities regulations to encourage capital formation']}
+];
+function renderLaws4(){
+  const box=$('#lawList4');if(!box)return;
+  LAWS4.forEach(l=>{const c=h('div',{class:'call'});
+    c.innerHTML=`<div class="call-t">${l.y} &mdash; ${l.n}</div><ul>${l.p.map(x=>'<li>'+x+'</li>').join('')}</ul>`;box.append(c);});
+}
+
+const MATCH={
+d1:{title:'Match the concept (Deck 1)',desc:'Every item here is straight from the Why Are FIs Special slides.',cols:[{label:'Concept',opts:['Brokerage function','Asset transformation','Delegated monitor','Maturity intermediation','Denomination intermediation','Credit allocation','Safety and soundness regulation','Monetary policy regulation','Investor protection regulation','Entry regulation','Net regulatory burden','Negative externality']}],items:[
+ {t:'An FI acts as an agent for the saver, providing information and transaction services',a:['Brokerage function'],why:'Slide 6.'},
+ {t:'An FI issues its own, more attractive claims to savers and uses the funds to buy primary securities',a:['Asset transformation'],why:'Slide 6.'},
+ {t:'Savers let one FI take on the job of monitoring a borrower, since the FI has more at stake',a:['Delegated monitor'],why:'Slide 7.'},
+ {t:'FIs fund long-term loans (like mortgages) with short-term deposits',a:['Maturity intermediation'],why:'Slide 9.'},
+ {t:'Small investors buy shares in a fund that holds large-denomination assets',a:['Denomination intermediation'],why:'Slide 9.'},
+ {t:'Requirements that push lending toward housing and farming',a:['Credit allocation'],why:'Slide 15.'},
+ {t:'No more than 15 percent of equity lent to one borrower',a:['Safety and soundness regulation'],why:'Slide 12.'},
+ {t:'Banks are required to hold specified levels of cash reserves against deposits',a:['Monetary policy regulation'],why:'Slide 14.'},
+ {t:'The Securities Acts of 1933 and 1934 protect against insider trading and lack of disclosure',a:['Investor protection regulation'],why:'Slide 18.'},
+ {t:'Rules on who can start an FI and what activities it can engage in',a:['Entry regulation'],why:'Slide 19.'},
+ {t:'The private cost regulation imposes on an FI, beyond its private benefit',a:['Net regulatory burden'],why:'Slide 13.'},
+ {t:'An FI failure hurts parties outside the failed FI itself',a:['Negative externality'],why:'Slide 10.'}]},
+d2:{title:'Match the concept (Deck 2)',desc:'Straight from the Intro to Banks slides.',cols:[{label:'Concept',opts:['Community bank','Regional or superregional bank','Money center bank','Dual banking system','Riegle-Neal Act','Financial Services Modernization Act','Maturity mismatch / interest rate risk']}],items:[
+ {t:'Small, local depository institution',a:['Community bank'],why:'Slide 18.'},
+ {t:'Has access to the federal funds market to finance lending and investing',a:['Regional or superregional bank'],why:'Slide 18.'},
+ {t:'Bank of New York Mellon, Deutsche Bank, Citigroup, JPMorgan Chase, HSBC Bank USA',a:['Money center bank'],why:'Slide 18.'},
+ {t:'1994 act permitting interstate branching',a:['Riegle-Neal Act'],why:'Slide 14.'},
+ {t:'1999 act permitting banks, investment banks, and insurers to merge',a:['Financial Services Modernization Act'],why:'Slide 17.'},
+ {t:'The risk the slide identifies from banks funding long-term loans with short-term deposits and borrowings',a:['Maturity mismatch / interest rate risk'],why:'Slide 21\u2019s inference.'}]},
+d4law:{title:'Match the law to what it did (Deck 4)',desc:'All 13 laws from the legislation slides.',cols:[{label:'Law',opts:['McFadden Act 1927','Glass-Steagall 1933','Bank Holding Company Act 1956','International Banking Act 1978','DIDMCA 1980','Garn-St Germain 1982','CEBA 1987','FIRREA 1989','FDICIA 1991','Riegle-Neal 1994','Gramm-Leach-Bliley 1999','Dodd-Frank 2010','2018 Economic Growth Act']}],items:[
+ {t:'Made national bank branching subject to the same rules as state banks',a:['McFadden Act 1927'],why:''},
+ {t:'Created the FDIC and banned interest on demand deposits',a:['Glass-Steagall 1933'],why:''},
+ {t:'Gave the Fed authority to regulate multibank holding companies',a:['Bank Holding Company Act 1956'],why:''},
+ {t:'Gave foreign banks access to Fedwire, the discount window, and deposit insurance',a:['International Banking Act 1978'],why:''},
+ {t:'Phased out Regulation Q and raised deposit insurance to $100,000',a:['DIDMCA 1980'],why:''},
+ {t:'Created MMDAs and super NOW accounts',a:['Garn-St Germain 1982'],why:''},
+ {t:'Redefined "bank" to limit the growth of nonbank banks',a:['CEBA 1987'],why:''},
+ {t:'Created the RTC and the OTS, and imposed the QTL test',a:['FIRREA 1989'],why:''},
+ {t:'Introduced prompt corrective action and risk-based deposit insurance premiums',a:['FDICIA 1991'],why:''},
+ {t:'Allowed bank holding companies to buy banks in other states',a:['Riegle-Neal 1994'],why:''},
+ {t:'Created financial services holding companies with the Fed as umbrella supervisor',a:['Gramm-Leach-Bliley 1999'],why:''},
+ {t:'Created the Consumer Financial Protection Bureau and the Financial Services Oversight Council',a:['Dodd-Frank 2010'],why:''},
+ {t:'Exempted banks under $10 billion from the Volcker Rule',a:['2018 Economic Growth Act'],why:''}]},
+d4reg:{title:'Who regulates it? (Deck 4)',desc:'From slide 3.',cols:[{label:'Regulator',opts:['FDIC','OCC','Federal Reserve','State authorities']}],items:[
+ {t:'Charters (and closes) national banks',a:['OCC'],why:'Slide 3.'},
+ {t:'Runs the Deposit Insurance Fund and works to prevent contagious runs',a:['FDIC'],why:'Slide 3.'},
+ {t:'Sets monetary policy and acts as lender of last resort',a:['Federal Reserve'],why:'Slide 3.'},
+ {t:'Perform functions similar to the OCC, for state-chartered banks',a:['State authorities'],why:'Slide 3.'}]}
+};
+
+const QC={
+d1:[
+ {q:'Without FIs, which three costs dampen the flow of funds between savers and corporations?',o:['Monitoring costs, liquidity costs, price risk','Interest rate risk, credit risk, liquidity risk','Agency costs, tax costs, transaction costs','Underwriting risk, operating risk, default risk'],a:0,w:'Slide 4.'},
+ {q:'The brokerage function of an FI is best described as',o:['acting as an agent for the saver, providing information and transaction services','issuing deposits to buy loans','setting reserve requirements','insuring deposits'],a:0,w:'Slide 6. Asset transformation is the other function.'},
+ {q:'The S&L debacle of the 1980s is linked on the slide to',o:['inadequate diversification, especially in oil-based Southwest economies','the repeal of Glass-Steagall','a spike in the fed funds rate','the creation of the CFPB'],a:0,w:'Slide 8 note.'},
+ {q:'Fedwire and CHIPS are examples of',o:['payment services','credit allocation','denomination intermediation','entry regulation'],a:0,w:'Slide 9.'},
+ {q:'Which type of regulation is the Qualified Thrift Lender (QTL) test an example of?',o:['Credit allocation regulation','Safety and soundness regulation','Investor protection regulation','Entry regulation'],a:0,w:'Slide 15: 65 percent of assets in residential mortgages.'},
+ {q:'Which act does the slide name as affecting charter value and the size of the net regulatory burden?',o:['The Financial Services Modernization Act of 1999','The Bank Secrecy Act','The McFadden Act','FDICIA'],a:0,w:'Slide 19.'},
+ {q:'According to the slide, U.S. FIs face increased competition from foreign FIs. About how many of the top ten banks are U.S. banks?',o:['2','5','8','10'],a:0,w:'Slide 25.'}],
+d2:[
+ {q:'This chapter (slide 2) recognizes three major FI groups. Which set is correct?',o:['Commercial banks, savings institutions, credit unions','Commercial banks, insurance companies, mutual funds','Investment banks, savings institutions, finance companies','Commercial banks, pension funds, credit unions'],a:0,w:'Slide 2.'},
+ {q:'What makes depository FIs "special" according to slide 6?',o:['They offer products on both sides of the balance sheet: loans and deposits','They only take deposits','They only make loans','They are the only FIs that are regulated'],a:0,w:'Slide 6 to 7.'},
+ {q:'The number of commercial banks fell from 14,416 (1985) to 4,774 (2018) mainly because of',o:['mergers and acquisitions','bank failures','new entrants leaving the industry','foreign competition'],a:0,w:'Slide 12.'},
+ {q:'Which loan type dominates small banks\u2019 portfolios?',o:['Real estate loans (about 74%)','C&I loans','Credit cards','Farm loans'],a:0,w:'Slide 15.'},
+ {q:'Since 1987, what has happened to business (C&I) loans as a share of bank assets?',o:['Declined, while securities and mortgages increased','Increased sharply','Stayed exactly flat','Disappeared entirely'],a:0,w:'Slide 19.'},
+ {q:'As of September 30, 2018, what are commercial banks\u2019 primary liabilities in order of size?',o:['Deposits, then borrowings, then other liabilities','Borrowings, then deposits, then equity','Equity, then deposits, then borrowings','Other liabilities, then deposits, then borrowings'],a:0,w:'Slide 21: $12,631.6B deposits, $1,589.4B borrowings, $390.3B other.'}],
+d3:[
+ {q:'On the 2021 aggregate balance sheet, what share of total assets is net loans and leases?',o:['46.84%','25.17%','15.41%','82.95%'],a:0,w:'Slide 3. 25.17% is securities, 15.41% is cash, 82.95% is deposits (a liability, not an asset share).'},
+ {q:'In the bank performance table, which year is the only one with negative ROA and ROE?',o:['2009','1989','2008','2010'],a:0,w:'Slide 4: ROA \u22120.10%, ROE \u22120.93% in 2009.'},
+ {q:'Why does the provision for loan losses peak a year before net charge-offs peak?',o:['Banks provision for expected losses before the loans are actually written off','Charge-offs always happen instantly','The data is reported with a one-year lag','Provisions and charge-offs always move together'],a:0,w:'Provision peaks in 2009 (1.94%), charge-offs peak in 2010 (2.67%).'},
+ {q:'A negative provision for loan losses, like 2021\u2019s \u22120.15%, means',o:['the bank released reserves it had built up, which boosts earnings','the bank made no loans that year','all loans were charged off','the bank paid a rebate to the FDIC'],a:0,w:'A release of prior reserves.'},
+ {q:'Where does the deck point you to look up the largest bank holding companies?',o:['The FFIEC\u2019s National Information Center','The FDIC website only','The Federal Reserve\u2019s H.8 release','Bloomberg Terminal'],a:0,w:'Slide 5: ffiec.gov/npw/Institution/TopHoldings.'}],
+d4:[
+ {q:'A state-chartered bank that has joined the Federal Reserve is regulated primarily by',o:['the Federal Reserve','the OCC','the FDIC only','no one; state member banks are unregulated'],a:0,w:'Slide 3 to 4.'},
+ {q:'Which year had the highest number of U.S. bank failures on the slide\u2019s chart?',o:['1989 (534 failures)','2008','2023','2010'],a:0,w:'Slide 5.'},
+ {q:'Which act created the Resolution Trust Corporation?',o:['FIRREA (1989)','FDICIA (1991)','Garn-St Germain (1982)','CEBA (1987)'],a:0,w:'Slide 8.'},
+ {q:'Prompt corrective action (mandatory regulator intervention when capital falls) came from',o:['FDICIA (1991)','FIRREA (1989)','Riegle-Neal (1994)','DIDMCA (1980)'],a:0,w:'Slide 8.'},
+ {q:'Which act allowed bank holding companies to acquire banks in other states starting in 1995?',o:['Riegle-Neal Interstate Banking and Branching Efficiency Act','Gramm-Leach-Bliley Act','Bank Holding Company Act','McFadden Act'],a:0,w:'Slide 8.'},
+ {q:'The 2018 Economic Growth, Regulatory Relief, and Consumer Protection Act exempted banks under what asset size from the Volcker Rule?',o:['$10 billion','$50 billion','$100 billion','$250 billion'],a:0,w:'Slide 10.'},
+ {q:'Which act created the Consumer Financial Protection Bureau?',o:['Dodd-Frank (2010)','Gramm-Leach-Bliley (1999)','FDICIA (1991)','CEBA (1987)'],a:0,w:'Slide 9.'}]
+};
+QC.final=shuffle([...QC.d1,...QC.d2,...QC.d3,...QC.d4]);
+/* ================= ENGINE (shared pattern with the full guide) ================= */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+function h(tag,attrs,html){const e=document.createElement(tag);if(attrs)for(const k in attrs){if(k==='class')e.className=attrs[k];else if(k==='text')e.textContent=attrs[k];else e.setAttribute(k,attrs[k]);}if(html!=null)e.innerHTML=html;return e;}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const CHECK='\u2713', CROSS='\u2717';
+
+const KEY='fin408SlideGuide.v1';
+let S={done:{},last:'d1',theme:null};
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);S=Object.assign(S,o);S.done=S.done||{};}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+let SECS=[];
+function buildNav(){
+  SECS=$$('.sec').map(s=>({id:s.id,title:s.dataset.title,grp:s.dataset.grp}));
+  const nav=$('#nav');nav.innerHTML='';
+  let grp=null,ul=null;
+  SECS.forEach(s=>{
+    if(s.grp!==grp){grp=s.grp;nav.append(h('div',{class:'navgrp'},grp));ul=h('ul',{class:'nav'});nav.append(ul);}
+    const li=h('li');const b=h('button',{type:'button','data-go':s.id});
+    b.innerHTML=`<span class="tick" aria-hidden="true"></span><span>${s.title}</span>`;
+    b.addEventListener('click',()=>show(s.id,true));
+    li.append(b);ul.append(li);
+  });
+}
+function show(id,focus){
+  if(!document.getElementById(id))id='d1';
+  $$('.sec').forEach(s=>s.classList.toggle('on',s.id===id));
+  $$('#nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.go===id?'true':'false'));
+  S.last=id;save();
+  const cur=$(`#nav button[data-go="${id}"]`);if(cur&&cur.scrollIntoView&&window.innerWidth<=900)cur.scrollIntoView({block:'nearest',inline:'center'});
+  window.scrollTo(0,0);
+  if(focus){const h1=$(`#${id} h1`);if(h1){h1.setAttribute('tabindex','-1');h1.focus({preventScroll:true});}}
+  try{history.replaceState(null,'','#'+id);}catch(e){}
+}
+function refreshProgress(){
+  const total=SECS.length;const done=SECS.filter(s=>S.done[s.id]).length;
+  $('#progFill').style.width=(100*done/total)+'%';
+  $('.prog-bar').setAttribute('aria-valuenow',Math.round(100*done/total));
+  $('#progTxt').textContent=`${done} of ${total} sections finished`;
+  SECS.forEach(s=>{const b=$(`#nav button[data-go="${s.id}"] .tick`);if(b)b.textContent=S.done[s.id]?CHECK:'';
+    const sec=document.getElementById(s.id);sec.classList.toggle('done',!!S.done[s.id]);
+    const fb=$('.finBtn',sec);if(fb){fb.textContent=S.done[s.id]?CHECK+' Finished (click to undo)':'Mark this section finished';fb.setAttribute('aria-pressed',S.done[s.id]?'true':'false');}});
+}
+function addFooters(){
+  SECS.forEach((s,i)=>{
+    const sec=document.getElementById(s.id);
+    const f=h('div',{class:'secfoot'});
+    const fin=h('button',{type:'button',class:'btn finBtn','aria-pressed':'false'},'Mark this section finished');
+    fin.addEventListener('click',()=>{S.done[s.id]=!S.done[s.id];save();refreshProgress();if(S.done[s.id]){const st=$('.stamp',sec);st.classList.remove('thud');void st.offsetWidth;st.classList.add('thud');}});
+    f.append(fin);
+    if(i<SECS.length-1){const nx=h('button',{type:'button',class:'btn pri'},'Next section: '+SECS[i+1].title);nx.addEventListener('click',()=>show(SECS[i+1].id,true));f.append(nx);}
+    sec.append(f);
+  });
+}
+
+function renderMC(box,qs,title){
+  const d=h('div',{class:'drill'});
+  d.append(h('p',{class:'drill-t'},title||'Quick check'));
+  d.append(h('p',{class:'drill-d'},'Click an answer. You get the reason right away, and you can try again if you miss.'));
+  const sc=h('p',{class:'small','aria-live':'polite'});
+  let firstTry={};
+  qs.forEach((q,qi)=>{
+    const w=h('div',{class:'mq'});
+    w.append(h('p',{class:'mq-q'},(qi+1)+'. '+q.q));
+    const opts=h('div',{class:'opts',role:'group'});
+    const order=shuffle(q.o.map((t,i)=>({t,i})));
+    const fb=h('div',{class:'fb','aria-live':'polite'});
+    const again=h('button',{type:'button',class:'btn',style:'display:none;margin-top:6px'},'Try again');
+    order.forEach(o=>{
+      const b=h('button',{type:'button',class:'opt'});b.innerHTML=`<span class="mk" aria-hidden="true"></span><span>${o.t}</span>`;
+      b.addEventListener('click',()=>{
+        if(w.dataset.locked)return;w.dataset.locked='1';
+        const ok=o.i===q.a;if(firstTry[qi]==null)firstTry[qi]=ok;
+        b.classList.add(ok?'right':'wrong');$('.mk',b).textContent=ok?CHECK:CROSS;
+        $$('.opt',opts).forEach(x=>x.setAttribute('aria-disabled','true'));
+        fb.className='fb show '+(ok?'ok':'no');
+        fb.innerHTML=`<span class="lead">${ok?CHECK+' Right.':CROSS+' Not quite.'}</span> ${q.w}`;
+        again.style.display=ok?'none':'inline-block';
+        const n=Object.values(firstTry).filter(Boolean).length;sc.textContent=`First-try score: ${n} of ${Object.keys(firstTry).length} answered (${qs.length} total)`;
+      });
+      opts.append(b);
+    });
+    again.addEventListener('click',()=>{delete w.dataset.locked;$$('.opt',opts).forEach(x=>{x.classList.remove('right','wrong');x.removeAttribute('aria-disabled');$('.mk',x).textContent='';});fb.className='fb';again.style.display='none';});
+    w.append(opts,fb,again);d.append(w);
+  });
+  d.append(sc);box.append(d);
+}
+
+function renderMatch(box,m){
+  const d=h('div',{class:'drill'});
+  d.append(h('p',{class:'drill-t'},m.title));
+  d.append(h('p',{class:'drill-d'},m.desc));
+  const wrap=h('div',{class:'tscroll'});
+  const tb=h('table',{class:'mt'});
+  const th=h('thead');const tr=h('tr');tr.append(h('th',null,'Item'));m.cols.forEach(c=>tr.append(h('th',null,c.label)));th.append(tr);tb.append(th);
+  const body=h('tbody');tb.append(body);wrap.append(tb);d.append(wrap);
+  const res=h('div',{class:'fb','aria-live':'polite'});
+  const bar=h('div',{class:'btnrow'});
+  const bC=h('button',{type:'button',class:'btn pri'},'Check');
+  const bS=h('button',{type:'button',class:'btn'},'Show answers');
+  const bR=h('button',{type:'button',class:'btn'},'Reset and shuffle');
+  bar.append(bC,bS,bR);d.append(bar,res);
+  let rows=[];
+  function build(){
+    body.innerHTML='';rows=[];
+    shuffle(m.items).forEach(it=>{
+      const r=h('tr');const td=h('td');td.innerHTML=it.t;const why=h('div',{class:'why'});why.innerHTML=it.why||'';td.append(why);r.append(td);
+      const sels=m.cols.map((c,ci)=>{const cell=h('td');const s=h('select',{'aria-label':c.label+' for '+it.t.replace(/<[^>]+>/g,'').replace(/&[a-z]+;/g,' ')});s.append(h('option',{value:''},'Choose'));c.opts.forEach(o=>s.append(h('option',{value:o},o)));const mk=h('span',{class:'mark','aria-hidden':'true'});cell.append(s,mk);r.append(cell);return {s,mk,ans:it.a[ci]};});
+      body.append(r);rows.push({it,sels,why});
+    });
+    res.className='fb';
+  }
+  bC.addEventListener('click',()=>{
+    let ok=0,tot=0,blank=0;
+    rows.forEach(r=>r.sels.forEach(x=>{tot++;x.s.classList.remove('right','wrong');if(!x.s.value){blank++;x.mk.textContent='';return;}const g=x.s.value===x.ans;if(g)ok++;x.s.classList.add(g?'right':'wrong');x.mk.className='mark '+(g?'y':'n');x.mk.textContent=g?CHECK:CROSS;}));
+    res.className='fb show '+(ok===tot?'ok':'no');
+    res.innerHTML=ok===tot?`<span class="lead">${CHECK} All ${tot} right.</span> Hit Reset to shuffle and do it again from memory.`:`<span class="lead">${ok} of ${tot} right.</span> ${blank?blank+' still blank. ':''}Fix the ${CROSS} ones, or use Show answers to see each reason.`;
+  });
+  bS.addEventListener('click',()=>{rows.forEach(r=>{r.sels.forEach(x=>{x.s.value=x.ans;x.s.classList.remove('wrong');x.s.classList.add('right');x.mk.className='mark y';x.mk.textContent=CHECK;});r.why.classList.add('show');});res.className='fb show info';res.innerHTML='Answers shown with the reason under each item. Reset to try it cold.';});
+  bR.addEventListener('click',build);
+  build();box.append(d);
+}
+function applyTheme(){const r=document.documentElement;if(S.theme)r.setAttribute('data-theme',S.theme);else r.removeAttribute('data-theme');
+  const dark=S.theme?S.theme==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;$('#themeBtn').textContent=dark?'Light mode':'Dark mode';$('#themeBtn').setAttribute('aria-pressed',dark?'true':'false');}
+/* ================= INIT ================= */
+function init(){
+  load();applyTheme();
+  $('#themeBtn').addEventListener('click',()=>{const dark=S.theme?S.theme==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;S.theme=dark?'light':'dark';save();applyTheme();});
+  $('#resetBtn').addEventListener('click',()=>{if(confirm('Clear all progress on this guide?')){S={done:{},last:'d1',theme:S.theme};save();refreshProgress();}});
+  buildNav();renderLaws4();
+  $$('[data-match]').forEach(b=>{const m=MATCH[b.dataset.match];if(m)renderMatch(b,m);});
+  $$('[data-qc]').forEach(b=>{const q=QC[b.dataset.qc];if(q)renderMC(b,q,b.dataset.qc==='final'?'Mixed review: 30 questions':'Quick check');});
+  addFooters();refreshProgress();
+  const hash=(location.hash||'').slice(1);
+  show(hash&&document.getElementById(hash)?hash:(S.last||'d1'));
+}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</main>
+</div>
+</body>
+</html>
