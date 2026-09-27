@@ -251,9 +251,19 @@ select.wrong,input.wrong{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)
 .small-btn{font-size:14px;padding:5px 11px}
 .small-btn[aria-pressed="true"]{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
 @media (max-width:900px){.eqline.big{font-size:18px}.ftable .frac{font-size:15px}}
+
+.sitenav{display:flex;gap:2px;background:var(--navy);font-family:var(--sans);font-size:15px;font-weight:600}
+.sitenav a{color:rgba(255,255,255,.72);text-decoration:none;padding:10px 18px;display:inline-block}
+.sitenav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.sitenav a[aria-current="page"]{color:#fff;background:rgba(255,255,255,.16)}
+@media (max-width:900px){.sitenav a{padding:9px 12px;font-size:14px}}
 </style>
 </head>
 <body>
+<nav class="sitenav" aria-label="Site">
+<a href="index.html" aria-current="page">Full Study Guide</a>
+<a href="slides-guide.html">Slide-Only Guide</a>
+</nav>
 <div class="app">
 <aside class="side" aria-label="Study navigation">
   <p class="brand">FIN 408 Exam 1 Study Desk</p>
